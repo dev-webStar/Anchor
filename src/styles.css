@@ -1,0 +1,131 @@
+@import "tailwindcss" source(none);
+@import "@fontsource/zen-kaku-gothic-new/400.css";
+@import "@fontsource/zen-kaku-gothic-new/500.css";
+@import "@fontsource/zen-kaku-gothic-new/700.css";
+@import "@fontsource/zen-kaku-gothic-new/900.css";
+@import "@fontsource/shippori-mincho-b1/600.css";
+@import "@fontsource/shippori-mincho-b1/800.css";
+@source "../src";
+
+/*
+  Anchor Hub — design tokens
+  Inspired by Tokyo transit maps and the ramen-shop ticket machine (券売機).
+  A reseller network drawn as a rail network: the company is the terminal, sellers are stations.
+  Stone walls, paper keys, sumi ink, and coloured lines (yamabuki, ai, wakatake, fuji, shu).
+*/
+
+@theme {
+  --font-sans: "Zen Kaku Gothic New", "Hiragino Sans", system-ui, sans-serif;
+  --font-mincho: "Shippori Mincho B1", "Hiragino Mincho ProN", Georgia, serif;
+
+  --color-stone: #e8eae4;
+  --color-stone-2: #dfe2db;
+  --color-paper: #fbfbf8;
+  --color-ink: #16181b;
+  --color-ink-2: #565b62;
+  --color-ink-3: #8a8f95;
+  --color-rule: #d3d6ce;
+  --color-rule-2: #c3c7bd;
+
+  --color-yamabuki: #f2b300;
+  --color-yamabuki-soft: #fbe7a6;
+  --color-ai: #1e3557;
+  --color-ai-2: #2c4a74;
+  --color-ai-soft: #d6deea;
+  --color-shu: #d23f27;
+  --color-shu-soft: #f6d9d2;
+  --color-wakatake: #2f7d52;
+  --color-wakatake-soft: #d5eadc;
+  --color-fuji: #6b5a8e;
+  --color-fuji-soft: #e3ddee;
+  --color-hanada: #2f6f8c;
+
+  --radius-key: 10px;
+  --radius-panel: 14px;
+  --radius-card: 18px;
+
+  --text-2xs: 0.6875rem;
+  --text-2xs--line-height: 1rem;
+
+  --animate-print: print 520ms cubic-bezier(0.2, 0.8, 0.2, 1);
+  --animate-lamp: lamp 2.4s ease-in-out infinite;
+  --animate-draw: draw 1.6s cubic-bezier(0.6, 0, 0.2, 1) both;
+  --animate-pop: pop 380ms cubic-bezier(0.3, 1.6, 0.5, 1) both;
+}
+
+@keyframes print {
+  0% { transform: translateY(-14px); clip-path: inset(0 0 100% 0); }
+  100% { transform: translateY(0); clip-path: inset(0 0 0 0); }
+}
+@keyframes draw {
+  from { stroke-dashoffset: var(--len, 1200); }
+  to { stroke-dashoffset: 0; }
+}
+@keyframes pop {
+  0% { transform: scale(0); }
+  100% { transform: scale(1); }
+}
+@keyframes lamp {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.45; }
+}
+
+@layer base {
+  * { border-color: var(--color-rule); }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    background: var(--color-stone);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-feature-settings: "palt" 0;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  ::selection { background: var(--color-yamabuki); color: var(--color-ink); }
+  :focus-visible { outline: 2px solid var(--color-ai); outline-offset: 2px; }
+  input, select, textarea, button { font: inherit; color: inherit; }
+  button { cursor: pointer; }
+  button:disabled { cursor: not-allowed; }
+  /* grid children may shrink below their content (long links, tables) instead of widening the page */
+  .grid > * { min-width: 0; }
+}
+
+@utility num {
+  font-variant-numeric: tabular-nums lining-nums;
+  letter-spacing: -0.01em;
+}
+@utility tategaki {
+  writing-mode: vertical-rl;
+  text-orientation: upright;
+}
+
+/* Paper key on the ticket machine: pressable, with a coloured line band on top */
+@utility machine-key {
+  position: relative;
+  background: var(--color-paper);
+  border: 1px solid var(--color-rule-2);
+  border-radius: var(--radius-key);
+  box-shadow: 0 2px 0 var(--color-rule-2);
+  transition: transform 80ms ease, box-shadow 80ms ease, border-color 120ms ease;
+}
+
+/* A paper ticket with a perforated stub edge */
+@utility ticket {
+  position: relative;
+  background: var(--color-paper);
+  border-radius: 6px;
+  -webkit-mask: radial-gradient(circle 7px at 0 50%, transparent 98%, #000) left / 51% 100% no-repeat,
+    radial-gradient(circle 7px at 100% 50%, transparent 98%, #000) right / 51% 100% no-repeat;
+  mask: radial-gradient(circle 7px at 0 50%, transparent 98%, #000) left / 51% 100% no-repeat,
+    radial-gradient(circle 7px at 100% 50%, transparent 98%, #000) right / 51% 100% no-repeat;
+}
+
+/* Fine wave pattern (seigaiha) used on the wallet card */
+@utility seigaiha {
+  background-image: radial-gradient(circle at 50% 100%, transparent 9px, rgba(255,255,255,0.07) 10px, transparent 11px, transparent 15px, rgba(255,255,255,0.07) 16px, transparent 17px);
+  background-size: 34px 17px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 1ms !important; transition-duration: 1ms !important; }
+}
