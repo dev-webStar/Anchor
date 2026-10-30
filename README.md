@@ -1,4 +1,4 @@
-# Anchor Hub — reseller system
+ # Anchor Hub — reseller system
 
 Software for any company that sells through a network of resellers, in any industry.
 A company subscribes monthly (M-Pesa or bank) and gets one place to:
